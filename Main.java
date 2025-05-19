@@ -1,4 +1,4 @@
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class Main {
     //**
@@ -16,5 +16,12 @@ public class Main {
 
 
 
+    }
+
+    public ImageIcon getRandomPhoto() {
+
+
+
+        return
     }
 }
