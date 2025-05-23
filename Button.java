@@ -3,7 +3,7 @@ import javax.swing.JFrame;
 import java.awt.Color;
 
 
-public class Button extends JFrame implements {
+public class Button extends JFrame {
     private Color borderColor;
     private Color insideColor;
     private int radius = 0;

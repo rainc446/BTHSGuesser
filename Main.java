@@ -23,11 +23,12 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setSize(width,height); //1920, 1080 is 1080p
-        frame.setVisible(true);
 
-        JPanel panelOne = new JPanel();
-        panelOne.setLayout(new FlowLayout((FlowLayout.CENTER)))
-        panelOne.setBackground(Color.blue); //lowercase is mutable, capital final
+
+        MainScreen mainScreen = new MainScreen();
+        frame.add(mainScreen, BorderLayout.CENTER);
+
+        frame.setVisible(true);
 
     }
 
