@@ -6,8 +6,6 @@ public class Main {
     //
     // */
 
-    private static int width = 1200;
-    private static int height = 800;
 
     public static void main(String[] args) {
 
@@ -22,7 +20,7 @@ public class Main {
         frame.setTitle("BTHS Guesser");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setSize(width,height); //1920, 1080 is 1080p
+        frame.setSize(Constants.width, Constants.height); //1920, 1080 is 1080p
 
 
         MainScreen mainScreen = new MainScreen();
