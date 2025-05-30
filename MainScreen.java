@@ -11,8 +11,9 @@ public class MainScreen extends JPanel {
     }
 
     public void initalize () {
-        this.setLayout(new FlowLayout((FlowLayout.CENTER)));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); //sets the gui to a box layout https://docs.oracle.com/javase/tutorial/uiswing/layout/box.html
         this.setBackground(Color.blue); //lowercase is mutable, capital final
+        add(Box.createVerticalGlue());
 
         /*
         * GUI SECTION
@@ -20,22 +21,25 @@ public class MainScreen extends JPanel {
         *
         * */
         JButton startButton = new JButton("Start");
-        startButton.setSize(100,50); // set size
+        startButton.setSize(200,200); // set size
         startButton.setVerticalTextPosition(AbstractButton.CENTER); //centers text
         //sets button to center horizontally and vertically
-        startButton.setVerticalAlignment(Constants.centerY - 120);
-        startButton.setHorizontalAlignment(Constants.centerX);
+        //startButton.setAlignmentY(Component.CENTER_ALIGNMENT);
+//        startButton.setMaximumSize(new Dimension(100,50));
+        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
         JButton settingButton = new JButton("Settings");
-        startButton.setSize(100,50); // set size
-        startButton.setVerticalTextPosition(AbstractButton.CENTER); //centers text
-        startButton.setHorizontalAlignment(Constants.centerX);
-        startButton.setVerticalAlignment(Constants.centerY);
-
+        settingButton.setSize(200,200); // set size
+        //settingButton.setVerticalTextPosition(AbstractButton.CENTER); //centers text
+        //settingButton.setAlignmentY(Component.CENTER_ALIGNMENT);
+        settingButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.add(startButton);
         this.add(settingButton);
+        add(Box.createRigidArea(new Dimension(0, 20)));
+        add(Box.createVerticalGlue());
+
     }
 
     public boolean getButtonNum () {
