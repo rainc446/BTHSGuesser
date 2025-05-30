@@ -24,7 +24,8 @@ public class Main {
 
 
         MainScreen mainScreen = new MainScreen();
-        frame.add(mainScreen, BorderLayout.CENTER);
+        frame.add(mainScreen);
+//        frame.pack();
 
         frame.setVisible(true);
 
