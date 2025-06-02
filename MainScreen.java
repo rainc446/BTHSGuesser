@@ -1,18 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 
 
 public class MainScreen extends JPanel {
     private BufferedImage pic;
-    private final JButton startButton = new JButton(new Buttons.StartGame("Start"));
-    private final JButton settingButton = new JButton(new Buttons.SettingsAction("Settings"));
+    private final JButton startButton = new JButton(new CustomActions.StartGame("Start"));
+    private final JButton settingButton = new JButton(new CustomActions.SettingsAction("Settings"));
 
     public MainScreen () {
         super();

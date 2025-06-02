@@ -3,7 +3,7 @@ import java.awt.event.ActionEvent;
 
 
 
-public class Buttons {
+public class CustomActions {
     public static class StartGame extends AbstractAction {
         public StartGame (String text) {
             super(text);
@@ -45,4 +45,18 @@ public class Buttons {
 
         }
     }
+
+    public static class SubmitAnswer extends AbstractAction{
+        public SubmitAnswer(String text) {
+            super(text);
+            putValue(Action.SHORT_DESCRIPTION, "Submit");
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Submitted Answer");
+        }
+
+    }
+
+//    public static class MousePress extends AbastractAction {
 }
