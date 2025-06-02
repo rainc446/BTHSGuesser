@@ -1,9 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
 
 
 public class MainScreen extends JPanel {
-
+    private BufferedImage pic;
+    private final JButton startButton = new JButton(new Buttons.StartGame("Start"));
+    private final JButton settingButton = new JButton(new Buttons.SettingsAction("Settings"));
 
     public MainScreen () {
         super();
@@ -11,36 +20,57 @@ public class MainScreen extends JPanel {
     }
 
     public void initalize () {
-
-        //https://docs.oracle.com/javase/tutorial/uiswing/layout/visual.html
-        //card layout for settings
         this.setSize(1920, 1080);
-        this.setLayout(new GridLayout(2, 1, 25, 25)); //sets the gui to a box layout https://docs.oracle.com/javase/tutorial/uiswing/layout/box.html
-        this.setBackground(Color.blue); //lowercase is mutable, capital final
-        add(Box.createVerticalGlue());
-//
+        this.setLayout(null);
+        this.setBackground(Color.GREEN); //lowercase is mutable, capital final
+
+
+
+        JLabel title = new JLabel(); //top title text
+        title.setBounds(Constants.centerX-150, Constants.centerY - 250,400,100);
+        title.setText("BTHSGuessr!");
+        title.setHorizontalTextPosition(SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 50)); //https://www.delftstack.com/howto/java/setfont-java/
+        title.setForeground(Color.BLUE);
+        this.add(title);
+
+        try {
+            pic = ImageIO.read(new File("logo.png"));
+            JLabel logo = new JLabel(new ImageIcon(pic)); //https://stackhowto.com/how-to-add-an-image-to-a-jpanel-in-java-swing/
+            logo.setBounds(Constants.centerX-400, Constants.centerY - 150,300,300);
+            logo.isVisible();
+            this.add(logo);
+
+        } catch (IOException noFile) {
+        }
+           //https://www.baeldung.com/java-images https://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
+
 //        /*
 //        * GUI SECTION
 //        * First Button is the button to start the game
-//        *Second Button opens a setting menu with to change GameSettings variables with a card layout
+//        * Second Button opens a setting menu with to change GameSettings variables with a card layout
 //        * */
-        JButton startButton = new JButton("Start");
-        startButton.setSize(100,100);
 
-        JButton settingButton = new JButton("Settings");
-        startButton.setSize(100,100);
+        startButton.setBounds(Constants.centerX - 75, Constants.centerY - 100,150,50);
+        startButton.setHorizontalTextPosition(SwingConstants.CENTER);
+
+
+        settingButton.setBounds(Constants.centerX - 75, Constants.centerY,150,50);
+        settingButton.setHorizontalTextPosition(SwingConstants.CENTER);
+
 
         this.add(startButton);
         this.add(settingButton);
-
-//        add(Box.createVerticalGlue());
-
-
-//        https://docs.oracle.com/javase/tutorial/uiswing/layout/grid.html
     }
 
-    public boolean getButtonNum () {
-        return false;
+
+
+
+    public JButton getStartButton () {
+        return startButton;
+    }
+    public JButton getSettingButton () {
+        return settingButton;
     }
 
 }
