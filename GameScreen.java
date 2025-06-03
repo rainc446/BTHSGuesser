@@ -22,14 +22,10 @@ public class GameScreen extends JPanel {
     public void initalize() {
         this.setSize(1920, 1080);
         this.setLayout(null);
-//        this.add();
-
-        Map buildingMap = new Map();
-
-//        while (roundsPlayed < GameSettings.)
-
+        currentLocation = Main.getLocation();
     }
 
-
-
+    public void newRound (Location newLocation) {
+        currentLocation = newLocation;
+    }
 }

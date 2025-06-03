@@ -21,13 +21,15 @@ public class Map {
     public Map () {
         mapFrame = new JFrame();
         mapPanel = new JPanel();
-        mapFrame.setSize(mapWidth, mapHeight);
+        mapFrame.setSize(640, 360);
         mapPanel.setSize(mapWidth, mapHeight);
         mapPanel.setLayout(null);
+        mapFrame.setResizable(false);
 
+        mapFrame.add(mapPanel);
         JButton submitButton = new JButton(new CustomActions.SubmitAnswer("Submit"));//
         submitButton.setBounds(mapWidth-50, mapHeight-25, 50, 25);
-        JMenu menu = new JMenu();
+//        JMenu menu = new JMenu();
         //https://docs.oracle.com/javase/8/docs/api/java/awt/event/MouseListener.html
         mapPanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -42,9 +44,9 @@ public class Map {
         try {
             BufferedImage map = ImageIO.read(new File("images/Map.jpg"));
             imageOfMap = new JLabel(new ImageIcon(map));
-            imageOfMap.setSize(mapWidth, mapHeight);
-            mapPanel.add(imageOfMap);
+            imageOfMap.setBounds(0,0,mapWidth,mapHeight);
             imageOfMap.setVisible(true);
+            mapPanel.add(imageOfMap);
         } catch (IOException noFile){ }
     }
 
@@ -54,11 +56,7 @@ public class Map {
         floor = newFloor;
     }
 
-    public void playGame (Location place) {
-
-    } //call this
-
-    public int calculateDistance(Location place) {
+    public static int calculateDistance(Location place) {
         return 0;
     }
     public JPanel getMapPanel () {

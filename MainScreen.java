@@ -34,7 +34,7 @@ public class MainScreen extends JPanel {
         try {
             pic = ImageIO.read(new File("images/logo.png"));
             JLabel logo = new JLabel(new ImageIcon(pic)); //https://stackhowto.com/how-to-add-an-image-to-a-jpanel-in-java-swing/
-            logo.setBounds(Constants.centerX-400, Constants.centerY - 150,300,300);
+            logo.setBounds(0, 10,200,200);
             logo.setVisible(true);
             this.add(logo);
 

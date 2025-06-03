@@ -55,6 +55,7 @@ public class CustomActions {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("Submitted Answer");
+            Map.calculateDistance(Main.getLocation());
         }
 
     }

@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.util.Timer;
 
 public class Main{
     public static JFrame mainFrame;
@@ -6,6 +7,9 @@ public class Main{
     public static final MainScreen mainScreen = new MainScreen();
     public static final SettingsScreen settingsScreen = new SettingsScreen();
     public static final GameScreen gameScreen = new GameScreen();
+    public static int numOfRounds = 3;
+    public static double timeLimit = 15.0;
+
     public static void main(String[] args) {
 
         /**
@@ -37,7 +41,17 @@ public class Main{
     }
 
     public static void playGame () {
-        
+        int rounds = 0;
+        Clock timer = Clock.systemDefaultZone();
+        while (rounds < numOfRounds) {
+            if (timer >= timeLimit) { //https://stackoverflow.com/questions/4044726/how-to-set-a-timer-in-java
+
+            }
+        }
+    }
+
+    public static Location getLocation () {
+
     }
 
 }
