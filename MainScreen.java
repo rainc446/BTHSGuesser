@@ -30,12 +30,12 @@ public class MainScreen extends JPanel {
         title.setFont(new Font("Arial", Font.BOLD, 50)); //https://www.delftstack.com/howto/java/setfont-java/
         title.setForeground(Color.BLUE);
         this.add(title);
-
+        //puts logo on screen
         try {
-            pic = ImageIO.read(new File("logo.png"));
+            pic = ImageIO.read(new File("images/logo.png"));
             JLabel logo = new JLabel(new ImageIcon(pic)); //https://stackhowto.com/how-to-add-an-image-to-a-jpanel-in-java-swing/
             logo.setBounds(Constants.centerX-400, Constants.centerY - 150,300,300);
-            logo.isVisible();
+            logo.setVisible(true);
             this.add(logo);
 
         } catch (IOException noFile) {

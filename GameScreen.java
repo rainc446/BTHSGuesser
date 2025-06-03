@@ -22,11 +22,11 @@ public class GameScreen extends JPanel {
     public void initalize() {
         this.setSize(1920, 1080);
         this.setLayout(null);
-        this.add();
+//        this.add();
 
         Map buildingMap = new Map();
 
-        while (roundsPlayed < GameSettings.)
+//        while (roundsPlayed < GameSettings.)
 
     }
 

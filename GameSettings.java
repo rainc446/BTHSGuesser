@@ -9,9 +9,9 @@ public class GameSettings {
 
     public void changeSettings () {
 
-        if () {
-
-        }
+//        if () {
+//
+//        }
     }
 
 }

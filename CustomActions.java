@@ -15,9 +15,10 @@ public class CustomActions {
             System.out.println("Started"); //debug
             if (this.enabled) {
                 this.setEnabled(false);
-                Main.frame.remove(Main.currentPanel);
-                Main.currentPanel = Main.gameScreen;
-                Main.frame.add(Main.gameScreen);
+                Main.changeScreen(Main.gameScreen);
+
+                Map map = new Map();
+                map.makeVisible(true);
             }
             else {
                 this.setEnabled(true);
