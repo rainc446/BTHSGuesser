@@ -1,4 +1,7 @@
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Location {
     //**
@@ -6,19 +9,25 @@ public class Location {
     // */
 
     private String roomNum;
-    private int floor;
-    private int xCord;
-    private int yCord;
-    private ImageIcon photo;
+    private final int floor;
+    private final int xCord;
+    private final int yCord;
+    private JLabel photo;
+    private JPanel locationPanel;
+    private final String name;
 
     private static int numOfRooms;
 
 
-    public Location (int x, int y, int floor, ImageIcon image) {
-        photo = image;
-        this.floor = floor;
+    public Location (int x, int y, int floor, String imageDirectory, String name) {
         xCord = x;
         yCord = y;
+        this.floor = floor;
+        this.name = name;
+        try {
+            ImageIcon imageOfLocation = new ImageIcon(ImageIO.read(new File(imageDirectory)));
+            photo = new JLabel(imageOfLocation);
+        } catch (IOException noLocationImage) {}
     }
 
     public int getXPos () {
@@ -33,8 +42,21 @@ public class Location {
         return floor;
     }
 
-    public ImageIcon getPhoto() {
+    public String getName () {
+        return name;
+    }
+
+    public JLabel getPhoto() {
         return photo;
     }
 
+    public JPanel getLocationPanel () {
+        //creates the JPanel to
+        locationPanel = new JPanel();
+        locationPanel.setLayout(null);
+        locationPanel.setBounds(0,0,1920,1080);
+        locationPanel.add(photo);
+        photo.setVisible(true);
+        return locationPanel;
+    }
 }

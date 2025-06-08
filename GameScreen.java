@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 
 public class GameScreen extends JPanel {
     private Location currentLocation;
+    private JPanel gamePanel;
 
     //**
     // Will just be a picture of the location have the map display in a different screen
@@ -22,10 +23,22 @@ public class GameScreen extends JPanel {
     public void initalize() {
         this.setSize(1920, 1080);
         this.setLayout(null);
-        currentLocation = Main.getLocation();
     }
 
     public void newRound (Location newLocation) {
+        if (currentLocation != null) {
+            currentLocation.getLocationPanel().setVisible(false);
+        }
         currentLocation = newLocation;
+        this.removeAll();
+        gamePanel = currentLocation.getLocationPanel();
+        this.add(gamePanel);
+        currentLocation.getLocationPanel().setVisible(true);
+    }
+    public JPanel getPanel () {
+        return gamePanel;
+    }
+    public void makeVisible(boolean state) {
+        this.setVisible(state);
     }
 }

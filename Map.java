@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -8,15 +9,16 @@ import java.io.File;
 import java.io.IOException;
 
 public class Map {
-    private int floor;
+    private static int floor = 1;
     private JLabel imageOfMap;
     private final int mapHeight = 323;
     private final int mapWidth = 621;
     private JFrame mapFrame;
     private JPanel mapPanel;
+    private JLabel floorText;
 
-    private int xPos;
-    private int yPos;
+    private static int xPos;
+    private static int yPos;
 
     public Map () {
         mapFrame = new JFrame();
@@ -27,9 +29,28 @@ public class Map {
         mapFrame.setResizable(false);
 
         mapFrame.add(mapPanel);
-        JButton submitButton = new JButton(new CustomActions.SubmitAnswer("Submit"));//
-        submitButton.setBounds(mapWidth-50, mapHeight-25, 50, 25);
-//        JMenu menu = new JMenu();
+        JButton submitButton = new JButton(new CustomActions.SubmitAnswer("Submit"));
+        submitButton.setBounds(mapWidth-200, mapHeight-30, 60, 25);
+        submitButton.setFont(new Font("Arial", Font.PLAIN, 8));
+        submitButton.setForeground(Color.BLUE);
+        mapPanel.add(submitButton);
+        submitButton.setVisible(true);
+
+
+        JButton upFloor = new JButton(new CustomActions.IncreaseFloor("Up"));
+        upFloor.setBounds(mapWidth-120, mapHeight-30, 60, 25);
+        upFloor.setFont(new Font("Arial", Font.PLAIN, 8));
+        upFloor.setForeground(Color.BLUE);
+        mapPanel.add(upFloor);
+        upFloor.setVisible(true);
+
+        JButton downFloor = new JButton(new CustomActions.DecreaseFloor("Down"));
+        downFloor.setBounds(mapWidth-60, mapHeight-30, 60, 25);
+        downFloor.setFont(new Font("Arial", Font.PLAIN, 8));
+        downFloor.setForeground(Color.BLUE);
+        mapPanel.add(downFloor);
+        downFloor.setVisible(true);
+
         //https://docs.oracle.com/javase/8/docs/api/java/awt/event/MouseListener.html
         mapPanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -41,23 +62,33 @@ public class Map {
             }
         }); //https://stackoverflow.com/questions/2668718/java-mouselistener
 
-        try {
+        try { //displays the map
             BufferedImage map = ImageIO.read(new File("images/Map.jpg"));
             imageOfMap = new JLabel(new ImageIcon(map));
             imageOfMap.setBounds(0,0,mapWidth,mapHeight);
             imageOfMap.setVisible(true);
             mapPanel.add(imageOfMap);
         } catch (IOException noFile){ }
+
     }
 
-
-
-    public void changeFloor (int newFloor) {
-        floor = newFloor;
+    public static void changeFloor (int newFloor) {
+        floor += newFloor;
+        if (floor < 1) {
+            floor = 0;
+        }
+        else if (floor > 8) {
+            floor = 8;
+        }
+        System.out.println("Floor: " + floor);
     }
 
     public static int calculateDistance(Location place) {
-        return 0;
+        int placeX = (int) Math.pow(place.getXPos(), 2);
+        int placeY = (int) Math.pow(place.getYPos(), 2);
+        int mouseX = (int) Math.pow(xPos, 2);
+        int mouseY = (int) Math.pow(yPos, 2);
+        return (int) Math.sqrt(Math.abs(mouseX - placeY) + Math.abs(mouseY - placeX)); // c = sqrt of x^2 + y^2
     }
     public JPanel getMapPanel () {
         return mapPanel;
@@ -67,6 +98,19 @@ public class Map {
         mapPanel.setVisible(state);
     }
 
+    public static int calculateScore () {
+        int score = 2000;
+        int distance = calculateDistance(Main.getCurrentLocation());
+        int correctFloor = Main.getCurrentLocation().getFloor();
+        if (correctFloor != floor) {
+            score -= Math.abs(correctFloor - floor) * 100 - distance;
+        }
+        return score;
+    }
+
+    public static int getFloor() {
+        return floor;
+    }
 
 
 
