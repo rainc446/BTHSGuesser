@@ -51,12 +51,14 @@ public class Location {
     }
 
     public JPanel getLocationPanel () {
-        //creates the JPanel to
+        //creates the JPanel with the image of the location
         locationPanel = new JPanel();
         locationPanel.setLayout(null);
         locationPanel.setBounds(0,0,1920,1080);
-        locationPanel.add(photo);
-        photo.setVisible(true);
+        JLabel image = photo;
+        locationPanel.add(image);
+        image.setBounds(0,0,1920,1080);
+        image.setVisible(true);
         return locationPanel;
     }
     public String toString() {

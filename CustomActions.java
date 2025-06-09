@@ -12,7 +12,7 @@ public class CustomActions {
 
         @Override
         public void actionPerformed(ActionEvent event) {
-            System.out.println("Started"); //debug
+            System.out.println("Started");
             if (this.enabled) {
                 this.setEnabled(true);
 
@@ -20,14 +20,19 @@ public class CustomActions {
                 Main.getMap().makeVisible(true);
                 Main.setupLocations();
                 Main.setGameScreen();
-                int randomIndex = (int) (Math.random() * (Constants.numOfLocations + 2 - 1));
-                Location randomLocation = Main.locations.remove(randomIndex);
-                Main.updateCurrentLocation(randomLocation);
-                Main.gameScreen.newRound(randomLocation); //chooses a random location and updates the game screen
-                Main.changeScreen(Main.gameScreen.getPanel()); //adds the game screen's panel to the frame
-                Main.gameScreen.makeVisible(true);
-            }
-            else {
+
+                int locationsSize = Main.locations.size();
+                if (locationsSize > 0) {
+                    int randomIndex = (int) (Math.random() * locationsSize);
+                    Location randomLocation = Main.locations.remove(randomIndex);
+                    Main.updateCurrentLocation(randomLocation);
+                    Main.gameScreen.newRound(randomLocation);
+                    JPanel firstPanel = Main.gameScreen.getPanel();
+                    Main.changeScreen(firstPanel);
+                    Main.gameScreen.getPanel().setVisible(true);
+                    Main.gameScreen.makeVisible(true);
+                }
+            } else {
                 this.setEnabled(false);
             }
         }

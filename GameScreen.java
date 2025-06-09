@@ -23,6 +23,7 @@ public class GameScreen extends JPanel {
     public void initalize() {
         this.setSize(1920, 1080);
         this.setLayout(null);
+        this.setBackground(Color.blue);
     }
 
     public void newRound (Location newLocation) {
@@ -30,13 +31,17 @@ public class GameScreen extends JPanel {
             currentLocation.getLocationPanel().setVisible(false);
         }
         currentLocation = newLocation;
-        this.removeAll();
         gamePanel = currentLocation.getLocationPanel();
-        this.add(gamePanel);
+        Main.mainFrame.add(gamePanel); //the new panel gets attached to the main frame
         currentLocation.getLocationPanel().setVisible(true);
+        this.repaint();     // force redraw https://stackoverflow.com/questions/4392722/how-to-repaint-a-jpanel-after-have-drawn-on-it
     }
     public JPanel getPanel () {
         return gamePanel;
+    }
+
+    public void changePanel () {
+
     }
     public void makeVisible(boolean state) {
         this.setVisible(state);
