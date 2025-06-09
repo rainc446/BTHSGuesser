@@ -21,15 +21,10 @@ public class CustomActions {
                 Main.setupLocations();
                 Main.setGameScreen();
 
-                int locationsSize = Main.locations.size();
-                if (locationsSize > 0) {
-                    System.out.println("e");
-                    int randomIndex = (int) (Math.random() * locationsSize);
-                    Location randomLocation = Main.locations.remove(randomIndex);
-                    Main.updateCurrentLocation(randomLocation);
+                if (Main.locations.size() > 0) {
+                    Location randomLocation = GameScreen.randomLocation();
                     Main.gameScreen.newRound(randomLocation);
-                    Main.gameScreen.getPanel().setVisible(true);
-                    Main.gameScreen.makeVisible(true);
+                    Main.mainFrame.dispose();
                 }
             } else {
                 this.setEnabled(false);
@@ -50,27 +45,38 @@ public class CustomActions {
             int score;
             if (Main.firstRound) {
                 score = Map.calculateScore();
-                System.out.print("Score" + Main.getRounds() + ":");
+                Main.scores.add(score);
+                System.out.print("Score " + Main.getRounds() + ":");
                 System.out.println(score);
                 Main.updateRounds();
                 Main.firstRound = false;
                 System.out.println(Main.getCurrentLocation());
-            }
-            else if (Main.newRound()) {
-                System.out.print("Score" + Main.getRounds() + ":");
+
+                Main.gameScreen.newRound(GameScreen.randomLocation());
                 score = Map.calculateScore();
-                System.out.println(Map.calculateScore());
+                Main.scores.add(score);
+
+            }
+            else if (Main.getRounds() < GameSettings.getRounds()) {
+                System.out.print("Score " + Main.getRounds() + ":");
+                Main.gameScreen.newRound(GameScreen.randomLocation());
                 Main.updateRounds();
-                System.out.println(Main.getCurrentLocation());
+                score = Map.calculateScore();
+                Main.scores.add(score);
+                System.out.println(Map.calculateScore());
+                System.out.println(Main.getCurrentLocation()); //prints location info
             }
             else {
-                this.setEnabled(false);
+                score = Map.calculateScore();
+                System.out.println(Map.calculateScore());
+                Main.scores.add(score);
                 int sum = 0;
                 for (int i = 0; i < GameSettings.getRounds(); i++) {
                     sum += Main.scores.get(i);
                 }
                 System.out.print("Your average score was: ");
                 System.out.println(sum / GameSettings.getRounds());
+                this.setEnabled(false);
             }
 
 

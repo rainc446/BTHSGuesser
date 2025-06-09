@@ -53,14 +53,6 @@ public class Main{
         mainFrame.setVisible(true);
     }
 
-    public static void changeScreen(JPanel panel) {
-        mainFrame.setVisible(false);
-        mainFrame.removeAll();
-        currentPanel = panel;
-        mainFrame.add(panel);
-        mainFrame.setVisible(true);
-    }
-
     public static void setupLocations () {
         try (Scanner getLocationData = new Scanner(new File("images/locations/roomInfo"))) {
             // Skip 5 lines
@@ -99,7 +91,7 @@ public class Main{
 
             }
         } catch (FileNotFoundException roomDataNotFound) {
-            System.err.println("Error: Could not find room data file");
+            System.err.println("Could not find room data file");
             roomDataNotFound.printStackTrace();
         }
     //https://stackoverflow.com/questions/4044726/how-to-set-a-timer-in-java
@@ -107,10 +99,7 @@ public class Main{
 
     public static boolean newRound () {
         if (rounds <= GameSettings.getRounds()) {
-            randomIndex = (int) (Math.random() * (Constants.numOfLocations - rounds));
-            currentLocation = locations.remove(randomIndex); //gets a random location
-            gameScreen.newRound(currentLocation);
-
+            gameScreen.newRound(GameScreen.randomLocation());
             return true;
         }
         return false;
