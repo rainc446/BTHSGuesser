@@ -9,13 +9,18 @@ public class Main{
     public static JFrame mainFrame;
     public static JPanel currentPanel;
     public static final MainScreen mainScreen = new MainScreen();
-    public static final GameScreen gameScreen = new GameScreen();
-    public static int numOfRounds = 3;
+    public static GameScreen gameScreen;
+    public static int numOfRounds;
+    private static int rounds = 1;
     public static double timeLimit = 15.0;
     private static boolean finishedSettings = false;
-    private static int totalNumberOfRooms = 5;
+    private static int totalNumberOfRooms = 1;
     private static Location currentLocation;
     private static Map map;
+    public static ArrayList<Location> locations = new ArrayList<Location>();
+    public static boolean firstRound = true;
+    public static ArrayList<Integer> scores = new ArrayList<Integer>();
+    private static int randomIndex = 0;
 
     public static void main(String[] args) {
         while (!finishedSettings) {
@@ -56,110 +61,85 @@ public class Main{
         mainFrame.setVisible(true);
     }
 
-//    public static void playGame () {
-//        int rounds = 0;
-//        ArrayList<Location> locations = new ArrayList<Location>();
-//        try (Scanner getLocationData = new Scanner(new File("images/locations/roomInfo"))) {
-//            while (getLocationData.hasNextLine()) {
-//                for (int i = 0; i < 5; i ++) {
-//                    //skips to the first line with location
-//                    getLocationData.nextLine();
-//                }
-//
-//                for (int i = 0; i < totalNumberOfRooms; i ++) { //creates the rooms
-//                    String directory = getLocationData.nextLine();
-//                    String name = getLocationData.nextLine();
-//                    int floor = getLocationData.nextInt();
-//                    int x = Integer.parseInt(getLocationData.nextLine());
-//                    int y = Integer.parseInt(getLocationData.nextLine());
-//                    locations.add(new Location(x,y,floor,directory,name));
-//                    getLocationData.nextLine();
-//                }
-//            }
-//        } catch (FileNotFoundException roomDataNotFound) {}
-//
-//        //https://stackoverflow.com/questions/4044726/how-to-set-a-timer-in-java
-//        while (rounds < numOfRounds) {
-//            currentLocation = locations.get(rounds);
-//            gameScreen.newRound(currentLocation);
-//            rounds++;
-//        }
-//    }
-public static void playGame() {
-    int rounds = 0;
-    ArrayList<Location> locations = new ArrayList<Location>();
-
-    try (Scanner getLocationData = new Scanner(new File("images/locations/roomInfo"))) {
-        // Skip the header lines (5 lines)
-        for (int i = 0; i < 5; i++) {
-            if (getLocationData.hasNextLine()) {
-                getLocationData.nextLine();
+    public static void setupLocations () {
+        try (Scanner getLocationData = new Scanner(new File("images/locations/roomInfo"))) {
+            // Skip the header lines (5 lines)
+            for (int i = 0; i < 6; i++) {
+                if (getLocationData.hasNextLine()) {
+                    getLocationData.nextLine();
+                }
             }
-        }
 
-        // Read each room's data
-        while (getLocationData.hasNextLine()) {
-            String directory = getLocationData.nextLine().trim();
+            // Read each room's data
+            while (getLocationData.hasNextLine() && locations.size() < Constants.numOfLocations) {
+                String directory = getLocationData.nextLine().trim();
 
             // Skip empty lines between entries
-            while (directory.isEmpty() && getLocationData.hasNextLine()) {
-                directory = getLocationData.nextLine().trim();
+                while (directory.isEmpty() && getLocationData.hasNextLine()) {
+                    directory = getLocationData.nextLine().trim();
+                }
+
+                if (!getLocationData.hasNextLine()) break;
+                String name = getLocationData.nextLine().trim();
+
+                if (!getLocationData.hasNextInt()) break;
+                int floor = getLocationData.nextInt();
+
+                if (!getLocationData.hasNextInt()) break;
+                int x = getLocationData.nextInt();
+
+                if (!getLocationData.hasNextInt()) break;
+                int y = getLocationData.nextInt();
+
+                // Consume the remaining newline
+                if (getLocationData.hasNextLine()) {
+                    getLocationData.nextLine();
+                }
+
+                locations.add(new Location(x, y, floor, directory, name));
+
             }
-
-            if (!getLocationData.hasNextLine()) break;
-            String name = getLocationData.nextLine().trim();
-
-            if (!getLocationData.hasNextInt()) break;
-            int floor = getLocationData.nextInt();
-
-            if (!getLocationData.hasNextInt()) break;
-            int x = getLocationData.nextInt();
-
-            if (!getLocationData.hasNextInt()) break;
-            int y = getLocationData.nextInt();
-
-            // Consume the remaining newline
-            if (getLocationData.hasNextLine()) {
-                getLocationData.nextLine();
-            }
-
-            locations.add(new Location(x, y, floor, directory, name));
-
-            // Skip empty lines between entries
-            while (getLocationData.hasNextLine() && getLocationData.nextLine().trim().isEmpty()) {
-                // Just consuming empty lines
-            }
-            if (getLocationData.hasNextLine()) {
-                // Move back to the last read line
-                getLocationData.reset();
-            }
+        } catch (FileNotFoundException roomDataNotFound) {
+            System.err.println("Error: Could not find room data file");
+            roomDataNotFound.printStackTrace();
         }
-    } catch (FileNotFoundException roomDataNotFound) {
-        System.err.println("Error: Could not find room data file");
-        roomDataNotFound.printStackTrace();
-        return;
+    //https://stackoverflow.com/questions/4044726/how-to-set-a-timer-in-java
     }
 
-    if (locations.isEmpty()) {
-        System.err.println("Error: No locations loaded");
-        return;
-    }
+    public static boolean newRound () {
+        if (rounds <= GameSettings.getRounds()) {
+            randomIndex = (int) (Math.random() * (Constants.numOfLocations + 2 - rounds));
+            currentLocation = locations.remove(randomIndex); //gets a random location
+            gameScreen.newRound(currentLocation);
 
-    // Rest of your game loop
-    while (rounds < numOfRounds && rounds < locations.size()) {
-        currentLocation = locations.get(rounds);
-        gameScreen.newRound(currentLocation);
-        rounds++;
-    }
-}
-
-    public static Location getCurrentLocation () {
-        return currentLocation;
+            return true;
+        }
+        return false;
     }
     public static Map getMap() {
         return map;
     }
-    public static void setMap(Map newMap) {
-        map = newMap;
+    public static void setMap() {
+        map = new Map();
+    }
+    public static int getRounds () {
+        return rounds;
+    }
+    public static void updateRounds () {
+        rounds++;
+    }
+
+    public static void setGameScreen () {
+        gameScreen = new GameScreen();
+    }
+
+
+    public static void updateCurrentLocation (Location currentLocation) {
+        Main.currentLocation = currentLocation;
+    }
+    public static Location getCurrentLocation () {
+        return currentLocation;
     }
 }
+
+

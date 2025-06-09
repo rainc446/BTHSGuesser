@@ -14,19 +14,18 @@ public class Location {
     private final int yCord;
     private JLabel photo;
     private JPanel locationPanel;
-    private final String name;
-
-    private static int numOfRooms;
-
+    private String directory;
 
     public Location (int x, int y, int floor, String imageDirectory, String name) {
         xCord = x;
         yCord = y;
         this.floor = floor;
-        this.name = name;
+        roomNum = name;
+        directory = imageDirectory;
         try {
             ImageIcon imageOfLocation = new ImageIcon(ImageIO.read(new File(imageDirectory)));
             photo = new JLabel(imageOfLocation);
+            photo.setBounds(0,0,1920,1080);
         } catch (IOException noLocationImage) {}
     }
 
@@ -43,8 +42,9 @@ public class Location {
     }
 
     public String getName () {
-        return name;
+        return roomNum;
     }
+
 
     public JLabel getPhoto() {
         return photo;
@@ -58,5 +58,12 @@ public class Location {
         locationPanel.add(photo);
         photo.setVisible(true);
         return locationPanel;
+    }
+    public String toString() {
+        return ("file path"+ directory+ "\n" +
+               "Room Name:"+ roomNum + "\n" +
+               "Floor:"+ floor + "\n" +
+               "X-Cord:" + xCord +"\n" +
+               "Y-Cord:"+ yCord +"\n");
     }
 }

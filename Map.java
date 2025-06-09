@@ -55,10 +55,10 @@ public class Map {
         mapPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                xPos = mapPanel.getX();
-                yPos = mapPanel.getY();
+                xPos = e.getX();
+                yPos = e.getY();
 
-                System.out.println("X-Cord: " + xPos + "Y-Cord: " + yPos);
+                System.out.println("X-Cord: " + xPos + " Y-Cord: " + yPos);
             }
         }); //https://stackoverflow.com/questions/2668718/java-mouselistener
 
@@ -88,7 +88,7 @@ public class Map {
         int placeY = (int) Math.pow(place.getYPos(), 2);
         int mouseX = (int) Math.pow(xPos, 2);
         int mouseY = (int) Math.pow(yPos, 2);
-        return (int) Math.sqrt(Math.abs(mouseX - placeY) + Math.abs(mouseY - placeX)); // c = sqrt of x^2 + y^2
+        return (int) Math.sqrt(Math.abs(mouseX - placeY) + Math.abs(mouseY - placeX)); // c = sqrt of x^2 + y^2 , take the line between the two points
     }
     public JPanel getMapPanel () {
         return mapPanel;
@@ -99,12 +99,10 @@ public class Map {
     }
 
     public static int calculateScore () {
-        int score = 2000;
+        int score;
         int distance = calculateDistance(Main.getCurrentLocation());
         int correctFloor = Main.getCurrentLocation().getFloor();
-        if (correctFloor != floor) {
-            score -= Math.abs(correctFloor - floor) * 100 - distance;
-        }
+        score = 2500 - ((Math.abs(floor-correctFloor) * 100) + distance); //maximum score of 2500, each floor incorrect is -100
         return score;
     }
 
@@ -112,6 +110,8 @@ public class Map {
         return floor;
     }
 
-
+    public void close () {
+        this.makeVisible(false);
+    }
 
 }
