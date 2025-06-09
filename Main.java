@@ -64,7 +64,7 @@ public class Main{
             while (getLocationData.hasNextLine() && locations.size() < Constants.numOfLocations) {
                 String directory = getLocationData.nextLine().trim();
                 //https://www.w3schools.com/java/java_user_input.asp
-                //Deepseek.ai bug fix for scanner issues
+                //Used Deepseek.ai to review my code for the scanner and why it wasn't working
                 // Skip empty lines between entries
                 while (directory.isEmpty() && getLocationData.hasNextLine()) {
                     directory = getLocationData.nextLine().trim();
@@ -97,13 +97,6 @@ public class Main{
     //https://stackoverflow.com/questions/4044726/how-to-set-a-timer-in-java
     }
 
-    public static boolean newRound () {
-        if (rounds <= GameSettings.getRounds()) {
-            gameScreen.newRound(GameScreen.randomLocation());
-            return true;
-        }
-        return false;
-    }
     public static Map getMap() {
         return map;
     }
