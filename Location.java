@@ -1,5 +1,7 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,8 +14,7 @@ public class Location {
     private final int floor;
     private final int xCord;
     private final int yCord;
-    private JLabel photo;
-    private JPanel locationPanel;
+    private BufferedImage imageOfLocation;
     private String directory;
 
     public Location (int x, int y, int floor, String imageDirectory, String name) {
@@ -22,11 +23,6 @@ public class Location {
         this.floor = floor;
         roomNum = name;
         directory = imageDirectory;
-        try {
-            ImageIcon imageOfLocation = new ImageIcon(ImageIO.read(new File(imageDirectory)));
-            photo = new JLabel(imageOfLocation);
-            photo.setBounds(0,0,1920,1080);
-        } catch (IOException noLocationImage) {}
     }
 
     public int getXPos () {
@@ -45,22 +41,10 @@ public class Location {
         return roomNum;
     }
 
-
-    public JLabel getPhoto() {
-        return photo;
+    public String getImageDirectory() {
+        return directory;
     }
 
-    public JPanel getLocationPanel () {
-        //creates the JPanel with the image of the location
-        locationPanel = new JPanel();
-        locationPanel.setLayout(null);
-        locationPanel.setBounds(0,0,1920,1080);
-        JLabel image = photo;
-        locationPanel.add(image);
-        image.setBounds(0,0,1920,1080);
-        image.setVisible(true);
-        return locationPanel;
-    }
     public String toString() {
         return ("file path"+ directory+ "\n" +
                "Room Name:"+ roomNum + "\n" +

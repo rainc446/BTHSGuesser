@@ -63,18 +63,17 @@ public class Main{
 
     public static void setupLocations () {
         try (Scanner getLocationData = new Scanner(new File("images/locations/roomInfo"))) {
-            // Skip the header lines (5 lines)
+            // Skip 5 lines
             for (int i = 0; i < 6; i++) {
                 if (getLocationData.hasNextLine()) {
                     getLocationData.nextLine();
                 }
             }
-
-            // Read each room's data
             while (getLocationData.hasNextLine() && locations.size() < Constants.numOfLocations) {
                 String directory = getLocationData.nextLine().trim();
-
-            // Skip empty lines between entries
+                //https://www.w3schools.com/java/java_user_input.asp
+                //Deepseek.ai bug fix for scanner issues
+                // Skip empty lines between entries
                 while (directory.isEmpty() && getLocationData.hasNextLine()) {
                     directory = getLocationData.nextLine().trim();
                 }
@@ -108,7 +107,7 @@ public class Main{
 
     public static boolean newRound () {
         if (rounds <= GameSettings.getRounds()) {
-            randomIndex = (int) (Math.random() * (Constants.numOfLocations + 2 - rounds));
+            randomIndex = (int) (Math.random() * (Constants.numOfLocations - rounds));
             currentLocation = locations.remove(randomIndex); //gets a random location
             gameScreen.newRound(currentLocation);
 
@@ -141,5 +140,3 @@ public class Main{
         return currentLocation;
     }
 }
-
-

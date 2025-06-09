@@ -23,12 +23,11 @@ public class CustomActions {
 
                 int locationsSize = Main.locations.size();
                 if (locationsSize > 0) {
+                    System.out.println("e");
                     int randomIndex = (int) (Math.random() * locationsSize);
                     Location randomLocation = Main.locations.remove(randomIndex);
                     Main.updateCurrentLocation(randomLocation);
                     Main.gameScreen.newRound(randomLocation);
-                    JPanel firstPanel = Main.gameScreen.getPanel();
-                    Main.changeScreen(firstPanel);
                     Main.gameScreen.getPanel().setVisible(true);
                     Main.gameScreen.makeVisible(true);
                 }
@@ -40,6 +39,7 @@ public class CustomActions {
 
 
     public static class SubmitAnswer extends AbstractAction{
+        //https://stackoverflow.com/questions/12396066/how-to-get-location-of-a-mouse-click-relative-to-a-swing-window, David Kroukamp
         public SubmitAnswer(String text) {
             super(text);
             putValue(Action.SHORT_DESCRIPTION, "Submit");
@@ -112,6 +112,4 @@ public class CustomActions {
             }
         }
     }
-
-//    public static class MousePress extends AbastractAction {
 }

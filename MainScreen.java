@@ -50,7 +50,6 @@ public class MainScreen extends JPanel {
         startButton.setBounds(Constants.centerX - 75, Constants.centerY - 100,150,50);
         startButton.setHorizontalTextPosition(SwingConstants.CENTER);
 
-
         this.add(startButton);
     }
 

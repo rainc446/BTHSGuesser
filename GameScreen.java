@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -7,7 +8,7 @@ import javax.imageio.ImageIO;
 
 public class GameScreen extends JPanel {
     private Location currentLocation;
-    private JPanel gamePanel;
+    private BufferedImage picOfLocation;
 
     //**
     // Will just be a picture of the location have the map display in a different screen
@@ -27,22 +28,28 @@ public class GameScreen extends JPanel {
     }
 
     public void newRound (Location newLocation) {
-        if (currentLocation != null) {
-            currentLocation.getLocationPanel().setVisible(false);
-        }
+        this.removeAll();
+        this.setLayout(null);
+        this.setSize(1920,1080);
+        this.setVisible(false);
         currentLocation = newLocation;
-        gamePanel = currentLocation.getLocationPanel();
-        Main.mainFrame.add(gamePanel); //the new panel gets attached to the main frame
-        currentLocation.getLocationPanel().setVisible(true);
-        this.repaint();     // force redraw https://stackoverflow.com/questions/4392722/how-to-repaint-a-jpanel-after-have-drawn-on-it
+        JLabel image;
+        try {
+            picOfLocation = ImageIO.read(new File(currentLocation.getImageDirectory()));
+            image = new JLabel(new ImageIcon(picOfLocation));
+            image.setBounds(0,0,1920,1080);
+            this.add(image);
+            image.setVisible(true);
+
+        } catch (IOException noLocationImage) {}
+        Main.changeScreen(this); //the new panel gets attached to the main frame
+        this.revalidate();
+        this.repaint(); // force redraw https://stackoverflow.com/questions/4392722/how-to-repaint-a-jpanel-after-have-drawn-on-it
     }
     public JPanel getPanel () {
-        return gamePanel;
+        return this;
     }
 
-    public void changePanel () {
-
-    }
     public void makeVisible(boolean state) {
         this.setVisible(state);
     }
