@@ -36,29 +36,30 @@ public class GameScreen {
     }
 
     public void newRound (Location newLocation) {
-//        gameFrame.dispose();
-//        initalize();
+        //removes the old panel from the frame
+        //Creates a new panel and adds a label
+        // /
         gameFrame.remove(gamePanel);
         gamePanel = new JPanel();
         gamePanel.setSize(1920, 1080);
         gamePanel.setLayout(null);
         currentLocation = newLocation;
-        try {
+        try { //gets the image of the screen
             picOfLocation = ImageIO.read(new File(currentLocation.getImageDirectory()));
             image = new JLabel(new ImageIcon(picOfLocation));
             image.setBounds(0,0,1920,1080);
             gamePanel.add(image);
             image.setVisible(true);
 
-        }             catch (IOException e) {
+        } catch (IOException e) { //in case of no image found/incorrect directory
             e.printStackTrace();
             JLabel errorLabel = new JLabel("Failed to load image");
             gamePanel.add(errorLabel, BorderLayout.CENTER);
         }
-        gameFrame.add(gamePanel);
+        gameFrame.add(gamePanel); //adds the panel
         gamePanel.setVisible(true);
         gamePanel.revalidate();
-        gamePanel.repaint(); // force redraw https://stackoverflow.com/questions/4392722/how-to-repaint-a-jpanel-after-have-drawn-on-it
+        gamePanel.repaint(); //https://stackoverflow.com/questions/4392722/how-to-repaint-a-jpanel-after-have-drawn-on-it
     }
     public JPanel getPanel () {
         return gamePanel;
