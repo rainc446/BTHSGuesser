@@ -46,7 +46,7 @@ public class Location {
     }
 
     public String toString() {
-        return ("file path"+ directory+ "\n" +
+        return ("Room Info \n" +
                "Room Name:"+ roomNum + "\n" +
                "Floor:"+ floor + "\n" +
                "X-Cord:" + xCord +"\n" +

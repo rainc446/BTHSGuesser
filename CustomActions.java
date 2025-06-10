@@ -29,6 +29,7 @@ public class CustomActions {
             } else {
                 this.setEnabled(false);
             }
+            Map.changeFloor(0);
         }
     }
 
@@ -77,6 +78,9 @@ public class CustomActions {
                 System.out.print("Your average score was: ");
                 System.out.println(sum / GameSettings.getRounds());
                 this.setEnabled(false);
+                //closes map and gameScreen
+                Main.gameScreen.getGameFrame().dispose();
+                Main.getMap().getMapFrame().dispose();
             }
 
 

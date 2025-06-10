@@ -26,23 +26,25 @@ public class GameScreen {
 
     public void initalize() {
         gameFrame = new JFrame();
+        gamePanel = new JPanel();
         gameFrame.setSize(1920,1080);
         gameFrame.setVisible(true);
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameFrame.setResizable(false);
         gameFrame.setTitle("Locations");
+        gameFrame.add(gamePanel);
     }
 
     public void newRound (Location newLocation) {
-        gameFrame.dispose();
-        initalize();
+//        gameFrame.dispose();
+//        initalize();
+        gameFrame.remove(gamePanel);
         gamePanel = new JPanel();
         gamePanel.setSize(1920, 1080);
         gamePanel.setLayout(null);
         currentLocation = newLocation;
         try {
             picOfLocation = ImageIO.read(new File(currentLocation.getImageDirectory()));
-            System.out.println(currentLocation.getImageDirectory());
             image = new JLabel(new ImageIcon(picOfLocation));
             image.setBounds(0,0,1920,1080);
             gamePanel.add(image);
@@ -60,6 +62,9 @@ public class GameScreen {
     }
     public JPanel getPanel () {
         return gamePanel;
+    }
+    public JFrame getGameFrame () {
+        return gameFrame;
     }
     public static Location randomLocation () {
         int randomIndex = (int) (Math.random() * Main.locations.size());

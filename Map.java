@@ -52,6 +52,7 @@ public class Map {
         downFloor.setVisible(true);
 
         //https://docs.oracle.com/javase/8/docs/api/java/awt/event/MouseListener.html
+        //https://stackoverflow.com/questions/2668718/java-mouselistener
         mapPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -60,7 +61,7 @@ public class Map {
 
                 System.out.println("X-Cord: " + xPos + " Y-Cord: " + yPos);
             }
-        }); //https://stackoverflow.com/questions/2668718/java-mouselistener
+        });
 
         try { //displays the map
             BufferedImage map = ImageIO.read(new File("images/Map.jpg"));
@@ -80,18 +81,19 @@ public class Map {
         else if (floor > 8) {
             floor = 8;
         }
-        System.out.println("Floor: " + floor);
+        System.out.println("Current Floor: " + floor);
     }
 
     public static int calculateDistance(Location place) {
-        int placeX = (int) Math.pow(place.getXPos(), 2);
-        int placeY = (int) Math.pow(place.getYPos(), 2);
-        int mouseX = (int) Math.pow(xPos, 2);
-        int mouseY = (int) Math.pow(yPos, 2);
-        return (int) Math.sqrt(Math.abs(mouseX - placeY) + Math.abs(mouseY - placeX)); // c = sqrt of x^2 + y^2 , take the line between the two points
-    }
-    public JPanel getMapPanel () {
-        return mapPanel;
+
+        // c = sqrt of (x2-x1)^2 + (y2-y1)^2 , take the line between the two points
+        int x1 = place.getXPos();
+        int y1 = place.getYPos();
+        int x2 = xPos;
+        int y2 = yPos;
+        double xDif = Math.pow((x2 - x1),2);
+        double yDif = Math.pow((y2 - y1),2);
+        return (int)  Math.sqrt(xDif + yDif);
     }
     public void makeVisible (boolean state) {
         mapFrame.setVisible(state);
@@ -110,8 +112,7 @@ public class Map {
         return floor;
     }
 
-    public void close () {
-        this.makeVisible(false);
+    public JFrame getMapFrame() {
+        return mapFrame;
     }
-
 }
